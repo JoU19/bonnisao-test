@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<!--轉圈圈OK/計時器30s/送出按鈕往下調PASS/報錯誤碼OK-->
+
+<head>
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+    <title>要保邦你掃</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="header">
+        <h1>Fubon</h1>
+        <nav id="nav">
+            <ul>
+                <li style="color: white;">要保邦你掃</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="head"> 要保邦你掃</div>
+
+    <!--<form id="myform" action="/somewhere/to/upload">-->
+    <!-- enctype="multipart/form-data"-->
+
+    <input type="file" id="file" accept="image/*" capture="camera" hidden />
+    <center><button type="button" onclick="file.click()" class="button big alt">拍照/上傳</button></center>
+    <div class="container-fluid">
+        <div class="row">
+           <div class="col-sm-1 col-md-4"></div>
+            <div class="col-sm-10 col-md-4">
+                <center><img id="preview_img" width="100%" src="#" class="hidden" />&nbsp;</center>
+            </div>
+            <div class="col-sm-1 col-md-4"></div>
+        </div>
+    </div>
+    <center>
+        <button type="button" id="start" class="button big special">
+            開始邦你掃
+        </button>
+    </center>
+
+    <!--</form>-->
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script>
+        var imgBase64;
+
+        $("#file").change(function () {
+            //當檔案改變後，做一些事 
+            $('#preview_img').removeClass('hidden');
+            readURL(this);   // this代表<input id="file">
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#preview_img").attr('src', e.target.result);
+                    var dataURL = e.target.result;
+                    //console.log(dataURL);
+                    imgBase64 = dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#start').click(function () {
+            //console.log(imgBase64);
+            $('#start').append('<span class="spinner-border spinner-border-sm"></span>');
+            $('#start').prop('disabled', true);
+            goServer(imgBase64);
+        });
+
+        //驗證一下base64
+        function cvTOimgur(imgBase64) {
+            $.ajax({
+                url: 'https://api.imgur.com/3/image',
+                type: 'post',
+                headers: {
+                    Authorization: 'Client-ID 5ef6d636ab820b4'
+                },
+                data: {
+                    image: imgBase64
+                },
+                dataType: 'base64',
+                success: function (response) {
+                    if (response.success) {
+                        console.log(response.data.link);
+                    }
+                }
+            });
+        }
+
+        //丟進去後端測試
+        function goServer(imgBase64) {
+            $.ajax({
+                url: 'https://bonnisao.herokuapp.com/test4',
+                type: 'post',
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://bonnisao.herokuapp.com'
+                },
+                data: {
+                    img_b64: imgBase64
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.output.length > 200) {
+                        var src = 'data:image/jpg;base64,' + response.output;
+                        $("#preview_img").attr('src', src);
+                    }
+                    else {
+                        alert(response.output);
+                    }
+
+                    $('#start').empty();
+                    $('#start').append('開始邦你掃');
+                    $('#start').prop('disabled', false);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

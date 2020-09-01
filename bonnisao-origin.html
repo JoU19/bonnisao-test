@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <title>要保邦你掃</title>
+        <style type="text/css">
+        .head{
+            background-color: darkturquoise;
+            color: white;
+            font: bold;
+            text-align: center;
+            margin-bottom: 20pt;
+            font-size: xx-large;
+        }
+        .content{
+            width: 40%;
+            border: 1pt solid red;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 15pt;
+            background-color: slategray;
+            height: 350pt;
+        }
+        .button1{
+            width: 50%;
+            border: 1pt solid black;
+            margin-top: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            color: white;
+            background-color: lightseagreen;
+            padding: 10pt;
+            font: bold;
+            font-size: larger; 
+        }
+        .button2{
+            width: 40%;
+            border: 1pt solid black;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            color: white;
+            background-color: lightseagreen;
+            font: bold;
+            font-size: larger;
+            padding: 10pt;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="head">要保邦你掃</div>
+        <div class="content">
+            <div class="button1">
+                <input id="file" type="file" accept="image/*" hidden/>
+                <button type="button" onclick="file.click()">拍照/上傳</button>
+            </div>
+        </div>
+        <div class="button2">開始邦你掃</div>
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+        <script>
+            $('input').on('change', function(e){      
+              const file = this.files[0];
+              
+              const fr = new FileReader();
+              fr.onload = function (e) {
+                $('img').attr('src', e.target.result);
+                console.log(e.target.result)
+              };
+              
+              // 使用 readAsDataURL 將圖片轉成 Base64
+              fr.readAsDataURL(file)
+            });
+        </script>
+    </body>
+</html>
