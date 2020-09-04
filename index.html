@@ -3,49 +3,53 @@
 <!--轉圈圈OK/計時器30s/送出按鈕往下調PASS/報錯誤碼OK-->
 
 <head>
-    <meta charset="utf-8"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+    <meta charset="utf-8">
+    </meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </meta>
     <title>要保邦你掃</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="beauty.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 
 <body>
     <!-- Header -->
-    <header id="header">
-        <h1>Fubon</h1>
-        <nav id="nav">
-            <ul>
-                <li style="color: white;">要保邦你掃</li>
-            </ul>
-        </nav>
+
+    <header>
+        <div class="d-flex flex-row">
+            <div class="col-sm-1 col-md-1">
+                <label>
+                    <input type='checkbox' checked>
+                    <span class='menu'> <span class='hamburger'></span> </span>
+                    <ul>
+                        <li> <img src="./rectangle.png" class="littleIcon"> 安安你好 </li>
+                        <li> <img src="./phone-camera.png" class="littleIcon"> 正面俯拍並保持紙張邊框完整 </li>
+                    </ul>
+                </label>
+            </div>
+            <div class="col-sm-10 col-md-10"></div>
+            <div class="col-sm-1 col-md-1" style="text-align: right; color: whitesmoke;">Bon<br>Scanner</div>
+        </div>
     </header>
 
-    <div class="head"> 要保邦你掃</div>
 
-    <!--<form id="myform" action="/somewhere/to/upload">-->
-    <!-- enctype="multipart/form-data"-->
 
-    <input type="file" id="file" accept="image/*" capture="camera" hidden />
-    <center><button type="button" onclick="file.click()" class="button big alt">拍照/上傳</button></center>
-    <div class="container-fluid">
+    <div class="container-fluid">&nbsp;
+        <input type="file" id="file" accept="image/*" capture="camera" hidden />
+        <center><button type="button" onclick="file.click()" class="button big alt">拍照/上傳</button></center>
         <div class="row">
-           <div class="col-sm-1 col-md-4"></div>
+            <div class="col-sm-1 col-md-4"></div>
             <div class="col-sm-10 col-md-4">
-                <center><img id="preview_img" width="100%" src="#" class="hidden" />&nbsp;</center>
+                <img id="preview_img" width="100%" src="#" class="hidden" />&nbsp;
             </div>
             <div class="col-sm-1 col-md-4"></div>
         </div>
+        <center><button type="button" id="start" class="button big special">開始邦你掃</button></center>
     </div>
-    <center>
-        <button type="button" id="start" class="button big special">
-            開始邦你掃
-        </button>
-    </center>
-
-    <!--</form>-->
 
 
 
